@@ -6,10 +6,6 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecuteResultHandler;
-import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.Executor;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -35,32 +31,18 @@ public class TestBase {
     public static DesiredCapabilities desiredCapabilities;
     public static WebDriverWait wait;
 
+    //take a screenshot method
     public void takeLocalScreenshot(String imageName) throws IOException {
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(scrFile, new File("failureScreenshots/" + imageName + ".png"));
     }
 
-    //    Properties props;
-//    InputStream inputStream;
     JsonParserHelper jsonParserHelper;
     JsonObject fbLoginCredentials;
     @BeforeSuite
     public void setUP() {
 
-//        /*
-        DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
-Executor executor = new DefaultExecutor();
-executor.setExitValue(1);
-        try {
-            executor.execute(new CommandLine("The command you just formulated above"), resultHandler);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//         */
-
-
         //File file = new File("src\\main\\resources\\Swvl.apk");
-
         //path to the project
         File rootPath = new File(System.getProperty("user.dir"));
         //path to folder where is the apk
@@ -106,6 +88,7 @@ executor.setExitValue(1);
 
     }
 
+    //run a checking point after each method to take a screenshot in case of failure
     @AfterMethod(alwaysRun = true)
     public void afterMethod(final ITestResult result) throws IOException {
         if (result.getStatus() == ITestResult.FAILURE || result.getStatus() == ITestResult.SKIP) {
@@ -119,6 +102,7 @@ executor.setExitValue(1);
         driver.quit();
     }
 
+    //to load the screen content
     @BeforeMethod(alwaysRun = true)
     public void waitingPage(){
         driver.manage().timeouts().implicitlyWait(500, TimeUnit.SECONDS);
@@ -130,16 +114,6 @@ executor.setExitValue(1);
     }
 
     public static void waitElements (List<WebElement> elements){
-        wait = new WebDriverWait(driver, 1000);
-        wait.until(ExpectedConditions.visibilityOfAllElements((WebElement) elements));
-    }
-
-    public static void waitMobileElements (List<MobileElement> elements){
-        wait = new WebDriverWait(driver, 1000);
-        wait.until(ExpectedConditions.visibilityOfAllElements((WebElement) elements));
-    }
-
-    public static void  waitAndroidElements(List <AndroidElement> elements){
         wait = new WebDriverWait(driver, 1000);
         wait.until(ExpectedConditions.visibilityOfAllElements((WebElement) elements));
     }

@@ -42,32 +42,17 @@ public class HelloAppium extends TestBase {
     @Test(priority = 1, dependsOnMethods = {"showOnBoarding"}) //or "showOnBoarding" if enabled
     public void loginFB() {
         try {
-//            driver.manage().timeouts().implicitlyWait(1000, TimeUnit.SECONDS);
-
 //        MobileElement fbLoginBtn = (MobileElement) driver.findElement(By.id("facebook_tv"));
-//        fbLoginBtn.click();
-//        m_login_email////android.webkit.WebView[@content-desc="Log in to Facebook | Facebook"]/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.widget.EditText[1]
-//                m_login_password ////android.webkit.WebView[@content-desc="Log in to Facebook | Facebook"]/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.widget.EditText[2]
-//        Log In ////android.widget.Button[@content-desc="Log In "]
-//        ..progress
-//
-//                //confirmation message:
-//        ////android.view.View[@content-desc="You previously logged in to Swvl with Facebook. Would you like to continue?"]
-//
-//        Continue: //android.widget.Button[@content-desc="Continue"]
-
-
             MobileElement fbBtn = (MobileElement) driver.findElement(By.id("io.swvl.customer:id/facebook_tv"));
-//            WebDriverWait waitFBbtn = new WebDriverWait(driver, 500);
-//            waitFBbtn.until(ExpectedConditions.elementToBeClickable(fbBtn));
             waitElement(fbBtn);
             fbBtn.click();
 
 //        WebElement fbMsg = driver.findElementByAccessibilityId("Log in to your Facebook account to connect to Swvl");
 //            MobileElement mobileElement = (MobileElement)fbMsg; //casting
 
-            MobileElement webProgBar1 = (MobileElement) driver.findElementById("android:id/progress");
-            boolean progress1 = webProgBar1.isDisplayed();
+            //check progress bar if still dislpayed
+            MobileElement webProgressBar1 = (MobileElement) driver.findElementById("android:id/progress");
+            boolean progress1 = webProgressBar1.isDisplayed();
             if (!progress1) {
                 driver.findElement(By.xpath("//android.view.View[@content-desc=\"English (UK)\"]")).click();
                 List<WebElement> FBwebView = driver.findElements(By.className("android.view.View")); //findElementsByClassName
@@ -80,9 +65,10 @@ public class HelloAppium extends TestBase {
                 }
             }
 
-            //android.widget.EditText
+            //get all elements with textfields the class of email && password
             List<WebElement> txtFields = driver.findElements(By.className("android.widget.EditText")); //findElementsByClassName
             txtFields.get(0);
+
             WebElement emailTxt = txtFields.get(0);
             //driver.findElement(By.xpath("//*[@text = 'Mobile number or email address']"));
             emailTxt.click();
@@ -110,18 +96,11 @@ public class HelloAppium extends TestBase {
     @Test(priority = 2, dependsOnMethods = {"showOnBoarding", "loginFB"})
     public void continueLoginFB() {
         try {
-//            driver.manage().timeouts().implicitlyWait(1000, TimeUnit.SECONDS);
-//        List<WebElement> continueScreenElements = driver.findElements(By.className("android.webkit.WebView"));
-//        WebDriverWait wait1 = new WebDriverWait(driver, 500);
-//        wait1.until(ExpectedConditions.visibilityOfAllElements(continueScreenElements));
-
 //        WebElement webProgBar2 =  driver.findElement(By.id("android:id/progress"));
 //        Boolean progress2 = webProgBar2.isDisplayed();
 
 //        while (!progress2) {
 //            System.out.println("progress should be false = "+progress2);
-
-            //                xpath("//android.widget.Button[@text=\"Continue\"]"));
 
             WebElement continueBtn = driver.findElement(By.xpath("//android.widget.Button[@text='Continue']"));//id("u_0_1")) className("android.widget.Button")
             //  System.out.println(continueBtn.getText());
@@ -131,6 +110,7 @@ public class HelloAppium extends TestBase {
 //            wait1.until(ExpectedConditions.elementToBeClickable(continueBtn));
             waitElement((MobileElement) continueBtn);
             continueBtn.click();
+
         } catch (Exception e) {
             System.out.println("Cause is" + e.getCause());
             System.out.println("Cause is" + e.getMessage());
