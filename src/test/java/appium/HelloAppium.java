@@ -35,7 +35,8 @@ public class HelloAppium extends TestBase {
                 allowBtn.click();
             }
         }
-////            driver.executeScript("mobile: scroll", ImmutableMap.of("direction", "left"));
+////       use this to scroll instead of clicking:
+//          driver.executeScript("mobile: scroll", ImmutableMap.of("direction", "left"));
 //        }
     }
 
@@ -100,14 +101,8 @@ public class HelloAppium extends TestBase {
 //        Boolean progress2 = webProgBar2.isDisplayed();
 
 //        while (!progress2) {
-//            System.out.println("progress should be false = "+progress2);
-
             WebElement continueBtn = driver.findElement(By.xpath("//android.widget.Button[@text='Continue']"));//id("u_0_1")) className("android.widget.Button")
             //  System.out.println(continueBtn.getText());
-
-//            WebDriverWait wait1 = new WebDriverWait(driver, 500);
-//            wait1.until(ExpectedConditions.visibilityOf(continueBtn));
-//            wait1.until(ExpectedConditions.elementToBeClickable(continueBtn));
             waitElement((MobileElement) continueBtn);
             continueBtn.click();
 
@@ -117,21 +112,20 @@ public class HelloAppium extends TestBase {
         }
 
     }
-//    }
-
-
-//}
 
     @Test(priority = 3, dependsOnMethods = {"showOnBoarding", "loginFB", "continueLoginFB"})
     public static void searchRide() {
         try {
             driver.manage().timeouts().implicitlyWait(1000, TimeUnit.SECONDS);
+
+            // to confirm the got it message instead of clicking on where to
 //        MobileElement gotIt = (MobileElement) driver.findElement(By.id("io.swvl.customer:id/got_it_tv"));
 //        WebDriverWait wait0 = new WebDriverWait(driver, 500);
 //        wait0.until(ExpectedConditions.visibilityOf(gotIt)).click();
 //        if (gotIt.isDisplayed()) {
 //            gotIt.click();
 //        }
+
 
 //        MobileElement locationAlert = (MobileElement) driver.findElement(By.id("io.swvl.customer:id/enable_location_layout"));
 //        if(locationAlert.isDisplayed()){
@@ -164,17 +158,18 @@ public class HelloAppium extends TestBase {
             waitElement(pickup);
             pickup.click();
             pickup.sendKeys("Mohandessin");
+
 //            pickup.sendKeys("Heliopolis");
-//            waitElements();
-            //            MobileElement confirmPickUPBtn = (MobileElement) driver.findElementByXPath("//android.widget.Button[@text=\"CONFIRM PICKUP\"]");
+
+            //to confirm the pick up on maps if requested
+            //MobileElement confirmPickUPBtn = (MobileElement) driver.findElementByXPath("//android.widget.Button[@text=\"CONFIRM PICKUP\"]");
 //            waitElement(confirmPickUPBtn);
 //            confirmPickUPBtn.click();
 
-                //same mobile location so will forward to maps
-//            List<MobileElement> pickupresults = (List<MobileElement>) (MobileElement)driver.findElementsByClassName("android.view.ViewGroup");
-//            waitMobileElements(pickupresults);
-            MobileElement selectMatchResult = (MobileElement) driver.findElementByXPath("//hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[1]");
-           ///hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[1]
+            //select the first suggestion
+            int firstSuggestion = 1;
+            MobileElement selectMatchResult = (MobileElement) driver.findElementByXPath("//hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup["+firstSuggestion+"]");
+            ///hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[1]
             waitElement(selectMatchResult);
             selectMatchResult.click();
 
@@ -191,7 +186,7 @@ public class HelloAppium extends TestBase {
 //            waitElement(dropoffMatchResult);
 //            dropoffMatchResult.click();
 
-            MobileElement selectMatchResult2 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[1]");
+            MobileElement selectMatchResult2 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup["+firstSuggestion+"]");
             waitElement(selectMatchResult2);
 //            driver.hideKeyboard();
             selectMatchResult.click();
@@ -204,88 +199,6 @@ public class HelloAppium extends TestBase {
 
     }
 
-    //    @Test (priority = 4 , dependsOnMethods = {"skipIntro","loginFB","continueLoginFB","searchRide"})
-//        public void chooseRideList(){
-//
-//        driver.manage().timeouts().implicitlyWait(1000, TimeUnit.SECONDS);
-//        //io.swvl.customer:id/places_rv
-////        List<MobileElement> list1 = (List<MobileElement>) driver.findElementById("io.swvl.customer:id/places_rv"); //("android.view.ViewGroup/[@index=\"0\"]"));
-////        List<MobileElement> list = (List<MobileElement>) driver.findElement(By.className("androidx.recyclerview.widget.RecyclerView")); //("android.view.ViewGroup/[@index=\"0\"]"));
-//////        WebDriverWait wait = new WebDriverWait(driver, 1000);
-////        MobileElement el1 = list.get(0);
-//////        wait.until(ExpectedConditions.elementToBeClickable(el1));
-//////                "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[1]/android.widget.TextView[1]");
-////        el1.click();
-////        MobileElement el2 = list.get(0);
-//        MobileElement el2 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[1]");
-//        el2.click();
-//
-//
-////                    findElementsByClassName("android.widget.TextView");
-//
-////        driver.manage().timeouts().implicitlyWait(5000, TimeUnit.SECONDS);
-////            wait.until(ExpectedConditions.visibilityOfAllElements((MobileElement)searchResult));
-//////            wait.until(ExpectedConditions.elementsToBeClickable(searchResult));
-////
-//////            TouchActions action = new TouchActions(driver);
-//////            action.doubleTap(maadi);
-//////            action.longPress(maadi);
-//////            action.perform();
-////            searchResult.get(0);
-////            System.out.println(searchResult.get(0).getText());
-////            for (WebElement chooseFirst : searchResult) {
-////                System.out.println(chooseFirst.getAttribute("text"));
-//////                if (chooseFirst.getAttribute("text").equals("Maadi")) {
-////////                    maadi = chooseFirst;
-//////                    chooseFirst.click();
-//////////                     action = new TouchActions(driver);
-//////////                    action.doubleTap(maadi);
-//////////                    action.perform();
-//////                    chooseFirst.click();
-//////                    System.out.println(chooseFirst.getText());
-////////                    Assert.assertEquals(chooseFirst.getText(),"Maadi");
-//////                    break;
-//////                }
-////            }
-////    }while (!progress);
-//
-//
-//
-//
-//        //MobileElement clickSpace = (MobileElement) driver.findElements(By.xpath("android.view.ViewGroup[@index=\"0\"]"));
-////        clickSpace.click();
-//
-////        action = new Actions(driver);
-////        action.moveToElement(el1);
-////        action.doubleClick();
-////        action.perform();
-////
-////        List <MobileElement> searchResult = (List <MobileElement>)(MobileElement) driver.findElementsById("io.swvl.customer:id/places_rv");
-////    google_tv
-//
-//    /*
-//MobileElement el7 = (MobileElement) driver.findElementById("io.swvl.customer:id/facebook_tv");
-//el7.click();
-//MobileElement el8 = (MobileElement) driver.findElementByXPath("//android.webkit.WebView[@content-desc=\"Log in to Facebook | Facebook\"]/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View[3]/android.view.View/android.view.View[2]/android.widget.EditText[1]");
-//el8.sendKeys("moaid@eventtus.com");
-//MobileElement el9 = (MobileElement) driver.findElementByXPath("//android.webkit.WebView[@content-desc=\"Log in to Facebook | Facebook\"]/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View[3]/android.view.View/android.view.View[2]/android.widget.EditText[2]");
-//el9.click();
-//el9.sendKeys("moaid_eventtus");
-//MobileElement el10 = (MobileElement) driver.findElementByAccessibilityId("Log In ");
-//el10.click();
-//MobileElement el11 = (MobileElement) driver.findElementByAccessibilityId("Continue");
-//el11.click();
-//
-//     */
-////
-//    @AfterSuite (enabled = false)
-//    public void tearDown(){
-//    driver.closeApp();
-//        driver.quit();
-//    }
-
-    //
- //    }
     @Test(priority = 4, dependsOnMethods = {"showOnBoarding", "loginFB", "continueLoginFB", "searchRide","chooseFromTo"})
     //,"chooseRideList"
     public void confirmDropOff() {
@@ -309,7 +222,7 @@ public class HelloAppium extends TestBase {
         try {
             int chooseNotFull = 4;
             MobileElement chooseTrip =(MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup["+chooseNotFull+"]");
-          chooseTrip.click();
+            chooseTrip.click();
 
 
         } catch (Exception e) {
@@ -377,7 +290,3 @@ public class HelloAppium extends TestBase {
 //////                break;
 //            }
 
-//    waitElement(chooseTrip);
-////            //to make sure that its not fully booked
-//
-//            waitElement(chooseTrip);
