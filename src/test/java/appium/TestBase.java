@@ -6,6 +6,10 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecuteResultHandler;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.Executor;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -22,13 +26,12 @@ import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
-    public static AndroidDriver<WebElement> driver; //AppiumDriver <MobileElement> appiumDriver
+    public static AndroidDriver driver; //AppiumDriver <MobileElement> appiumDriver
     public static DesiredCapabilities desiredCapabilities;
     public static WebDriverWait wait;
 
@@ -42,7 +45,19 @@ public class TestBase {
     JsonParserHelper jsonParserHelper;
     JsonObject fbLoginCredentials;
     @BeforeSuite
-    public void setUP() throws MalformedURLException {
+    public void setUP() {
+
+//        /*
+        DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
+Executor executor = new DefaultExecutor();
+executor.setExitValue(1);
+        try {
+            executor.execute(new CommandLine("The command you just formulated above"), resultHandler);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//         */
+
 
         //File file = new File("src\\main\\resources\\Swvl.apk");
 
@@ -76,7 +91,7 @@ public class TestBase {
 
             desiredCapabilities.setCapability("app", app.getAbsolutePath());//src\main\resources\Swvl.apk
             URL url = new URL("http://0.0.0.0:4723/wd/hub");
-            driver = new AndroidDriver<WebElement>(url, desiredCapabilities); //or = new AppiumDriver<MobileElement>(url,desiredCapabilities);
+            driver = new AndroidDriver (url, desiredCapabilities); //or = new AppiumDriver<MobileElement>(url,desiredCapabilities);
 //            driver.toggleLocationServices();
             driver.setLocation(new Location(30, 31, 10));
             driver.manage().timeouts().implicitlyWait(500, TimeUnit.SECONDS);
